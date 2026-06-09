@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marsala.blog — Guida Turistica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blu:#1A6B9A;
+  --oro:#E8A020;
+  --sabbia:#EBF4FA;
+  --notte:#0D2233;
+  --grigio:#5A7A8A;
+  --bg:#F4F9FC;
+  --border:#C8DDE8;
+  --bianco:#FFFFFF;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--notte);font-size:15px;}
+.topbar{background:var(--blu);color:#fff;padding:0.35rem 0;font-size:0.7rem;border-bottom:2px solid var(--oro);}
+.topbar-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+.topbar-date{opacity:0.75;letter-spacing:0.05em;}
+.topbar-links{display:flex;gap:1.2rem;}
+.topbar-links a{color:#fff;text-decoration:none;opacity:0.8;transition:opacity 0.15s;}
+.topbar-links a:hover{opacity:1;}
+.weather{display:flex;align-items:center;gap:0.4rem;font-weight:500;}
+nav{background:var(--bianco);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(26,14,8,0.06);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
+.nav-top{display:flex;justify-content:space-between;align-items:center;padding:0.9rem 0;}
+.logo{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--blu);text-decoration:none;letter-spacing:-0.01em;}
+.logo span{color:var(--oro);}
+.nav-search{display:flex;align-items:center;gap:0.5rem;background:var(--sabbia);border:1px solid var(--border);border-radius:20px;padding:0.4rem 0.9rem;}
+.nav-search input{background:transparent;border:none;outline:none;font-size:0.82rem;color:var(--notte);width:180px;}
+.nav-search input::placeholder{color:var(--grigio);}
+.nav-search-btn{background:none;border:none;cursor:pointer;color:var(--grigio);font-size:0.9rem;}
+.nav-cats{display:flex;gap:0;border-top:1px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+.nav-cats::-webkit-scrollbar{display:none;}
+.nav-cat{padding:0.6rem 1.1rem;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--grigio);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.15s;}
+.nav-cat:hover{color:var(--blu);}
+.nav-cat.active{color:var(--blu);border-bottom-color:var(--blu);}
+.ticker{background:var(--sabbia);border-bottom:1px solid var(--border);padding:0.45rem 0;}
+.ticker-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:0;}
+.ticker-label{background:var(--blu);color:#fff;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:3px;flex-shrink:0;z-index:2;position:relative;margin-right:1rem;white-space:nowrap;}
+.ticker-wrap{overflow:hidden;flex:1;position:relative;}
+.ticker-text{font-size:0.8rem;color:var(--notte);white-space:nowrap;display:inline-block;animation:ticker 35s linear infinite;}
+@keyframes ticker{0%{transform:translateX(100%);}100%{transform:translateX(-100%);}}
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
+section{padding:2.5rem 0;}
+.sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:2px solid var(--blu);}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--notte);}
+.sec-title span{color:var(--blu);}
+.sec-more{font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blu);text-decoration:none;display:flex;align-items:center;gap:0.3rem;}
+.sec-more:hover{text-decoration:underline;}
+.hero-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.5px;margin-bottom:2.5rem;}
+.hero-main{position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;}
+.hero-main:hover .hero-img{transform:scale(1.03);}
+.hero-img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;background:linear-gradient(135deg,#2B0A14,#8B1A2B,#C9923A);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,14,8,0.9) 0%,transparent 55%);}
+.hero-content{position:absolute;bottom:0;left:0;right:0;padding:1.8rem;}
+.hero-cat{font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--oro);background:rgba(26,14,8,0.5);padding:0.25rem 0.6rem;border-radius:2px;display:inline-block;margin-bottom:0.6rem;}
+.hero-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:#fff;line-height:1.25;}
+.hero-sub{font-size:0.82rem;color:rgba(255,255,255,0.7);margin-top:0.5rem;line-height:1.6;}
+.hero-meta{font-size:0.7rem;color:rgba(255,255,255,0.5);margin-top:0.8rem;display:flex;gap:1rem;align-items:center;}
+.hero-side{display:flex;flex-direction:column;gap:1.5px;}
+.hero-side-item{flex:1;position:relative;overflow:hidden;cursor:pointer;min-height:120px;}
+.hero-side-item:hover .hs-img{transform:scale(1.05);}
+.hs-img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;background:linear-gradient(135deg,#4A1A2B,#C9923A);}
+.hs-img.b2{background:linear-gradient(135deg,#1A3B4A,#2A7B6A);}
+.hs-img.b3{background:linear-gradient(135deg,#3A4A1A,#7B8A3A);}
+.hs-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,14,8,0.85),transparent 60%);}
+.hs-content{position:absolute;bottom:0;left:0;right:0;padding:0.9rem;}
+.hs-cat{font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--oro);}
+.hs-title{font-family:'Playfair Display',serif;font-size:0.95rem;color:#fff;line-height:1.3;margin-top:0.2rem;}
+.card-grid{display:grid;gap:1.5rem;}
+.card-grid.cols2{grid-template-columns:repeat(2,1fr);}
+.card-grid.cols3{grid-template-columns:repeat(3,1fr);}
+.card-grid.cols4{grid-template-columns:repeat(4,1fr);}
+.card{cursor:pointer;background:var(--bianco);border:1px solid var(--border);overflow:hidden;transition:box-shadow 0.2s,transform 0.2s;}
+.card:hover{box-shadow:0 4px 20px rgba(26,14,8,0.1);transform:translateY(-2px);}
+.card-img{aspect-ratio:16/10;overflow:hidden;}
+.card-img-bg{width:100%;height:100%;transition:transform 0.4s;}
+.card:hover .card-img-bg{transform:scale(1.05);}
+.ci1{background:linear-gradient(135deg,#8B1A2B,#C9923A);}
+.ci2{background:linear-gradient(135deg,#1A4B6B,#2A8BAA);}
+.ci3{background:linear-gradient(135deg,#2B6B1A,#6BAA3A);}
+.ci4{background:linear-gradient(135deg,#6B1A6B,#AA3AAA);}
+.ci5{background:linear-gradient(135deg,#6B4A1A,#AAAA3A);}
+.ci6{background:linear-gradient(135deg,#1A6B5A,#3AAAAA);}
+.ci7{background:linear-gradient(135deg,#4A1A6B,#8A3AAA);}
+.ci8{background:linear-gradient(135deg,#6B2B1A,#AA5A3A);}
+.ci9{background:linear-gradient(135deg,#1A5A6B,#3A9AAA);}
+.ci10{background:linear-gradient(135deg,#5A6B1A,#AAAA5A);}
+.ci11{background:linear-gradient(135deg,#6B1A3A,#AA3A6A);}
+.ci12{background:linear-gradient(135deg,#1A2B6B,#3A5AAA);}
+.card-body{padding:1rem;}
+.card-tag{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--blu);margin-bottom:0.4rem;}
+.card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;line-height:1.35;color:var(--notte);}
+.card-desc{font-size:0.78rem;color:var(--grigio);margin-top:0.4rem;line-height:1.6;}
+.card-meta{display:flex;justify-content:space-between;align-items:center;margin-top:0.8rem;font-size:0.68rem;color:var(--grigio);}
+.card-rating{color:var(--oro);letter-spacing:0.05em;}
+.card-price{font-weight:600;color:var(--blu);}
+.list-card{display:flex;gap:1rem;align-items:flex-start;padding:1rem 0;border-bottom:1px solid var(--border);}
+.list-card:last-child{border-bottom:none;}
+.list-card:hover .lc-title{color:var(--blu);}
+.lc-img{width:90px;height:68px;flex-shrink:0;overflow:hidden;border-radius:2px;}
+.lc-img-bg{width:100%;height:100%;transition:transform 0.3s;}
+.list-card:hover .lc-img-bg{transform:scale(1.08);}
+.lc-body{flex:1;}
+.lc-tag{font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--blu);}
+.lc-title{font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:700;line-height:1.3;color:var(--notte);margin-top:0.2rem;transition:color 0.15s;cursor:pointer;}
+.lc-meta{font-size:0.68rem;color:var(--grigio);margin-top:0.4rem;}
+.highlight{background:var(--blu);color:#fff;padding:2rem;position:relative;overflow:hidden;}
+.highlight::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.05);}
+.highlight-label{font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:0.5rem;}
+.highlight-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;line-height:1.3;}
+.highlight-text{font-size:0.82rem;color:rgba(255,255,255,0.75);margin-top:0.7rem;line-height:1.7;}
+.highlight-btn{display:inline-block;margin-top:1.2rem;padding:0.6rem 1.4rem;background:var(--oro);color:var(--notte);font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:background 0.2s;}
+.highlight-btn:hover{background:#e0a84c;}
+.info-box{background:var(--sabbia);border:1px solid var(--border);padding:1.5rem;}
+.info-box-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+.info-row{display:flex;justify-content:space-between;align-items:flex-start;padding:0.5rem 0;border-bottom:1px solid rgba(232,224,208,0.5);font-size:0.8rem;}
+.info-row:last-child{border-bottom:none;}
+.info-key{color:var(--grigio);font-weight:500;}
+.info-val{color:var(--notte);font-weight:600;text-align:right;}
+.weather-widget{background:linear-gradient(135deg,var(--blu),#C9923A);color:#fff;padding:1.5rem;border-radius:2px;}
+.ww-title{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;opacity:0.7;margin-bottom:0.8rem;}
+.ww-temp{font-family:'Playfair Display',serif;font-size:3rem;font-weight:400;line-height:1;}
+.ww-desc{font-size:0.85rem;opacity:0.8;margin-top:0.4rem;}
+.ww-row{display:flex;gap:1.5rem;margin-top:1rem;}
+.ww-item{font-size:0.75rem;opacity:0.7;}
+.ww-item strong{display:block;font-size:0.85rem;opacity:1;font-weight:600;}
+.tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem;}
+.tag{font-size:0.72rem;padding:0.3rem 0.75rem;background:var(--bianco);border:1px solid var(--border);color:var(--grigio);cursor:pointer;border-radius:20px;transition:all 0.15s;}
+.tag:hover{border-color:var(--blu);color:var(--blu);}
+.promo{background:var(--notte);color:#fff;padding:2.5rem;text-align:center;margin:1.5rem 0;}
+.promo-sub{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--oro);margin-bottom:0.5rem;}
+.promo-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1.2;}
+.promo-text{font-size:0.88rem;color:rgba(255,255,255,0.65);margin-top:0.8rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7;}
+.promo-btns{display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap;}
+.btn-oro{padding:0.75rem 2rem;background:var(--oro);color:var(--notte);font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;border-radius:2px;text-decoration:none;transition:background 0.2s;}
+.btn-oro:hover{background:#e0a84c;}
+.btn-ghost{padding:0.75rem 2rem;background:transparent;color:#fff;font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.3);cursor:pointer;border-radius:2px;text-decoration:none;transition:border-color 0.2s;}
+.btn-ghost:hover{border-color:#fff;}
+.two-col{display:grid;grid-template-columns:1fr 300px;gap:2rem;}
+@media(max-width:900px){.two-col{grid-template-columns:1fr;}}
+footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem;}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-bottom:2rem;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;margin-bottom:0.8rem;}
+.footer-logo span{color:var(--oro);}
+.footer-tagline{font-size:0.78rem;line-height:1.7;}
+.footer-col-title{font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:0.5rem;}
+.footer-links{display:flex;flex-direction:column;gap:0.5rem;}
+.footer-links a{font-size:0.8rem;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.15s;}
+.footer-links a:hover{color:var(--oro);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:1.5rem;display:flex;justify-content:space-between;font-size:0.72rem;flex-wrap:wrap;gap:0.5rem;}
+@media(max-width:1024px){.card-grid.cols4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:768px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-side{flex-direction:row;gap:1.5px;}
+  .hero-side-item{min-height:100px;}
+  .card-grid.cols3{grid-template-columns:repeat(2,1fr);}
+  .card-grid.cols2{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-title{font-size:1.3rem;}
+  .hero-sub{display:none;}
+  .nav-search input{width:130px;}
+  .topbar-links{display:none;}
+}
+@media(max-width:560px){
+  .card-grid.cols3,.card-grid.cols2,.card-grid.cols4{grid-template-columns:1fr;}
+  .hero-side{flex-direction:column;}
+  .footer-grid{grid-template-columns:1fr;}
+  .promo-title{font-size:1.4rem;}
+  .promo{padding:1.8rem 1rem;}
+  .hero-content{padding:1rem;}
+  .hero-title{font-size:1.15rem;}
+  .hero-meta{flex-wrap:wrap;gap:0.5rem;font-size:0.65rem;}
+  .nav-search{display:none;}
+  .logo{font-size:1.5rem;}
+  .topbar-inner{justify-content:space-between;}
+  .topbar-date{font-size:0.65rem;}
+  .container{padding:0 1rem;}
+  section{padding:1.8rem 0;}
+  .sec-title{font-size:1.1rem;}
+  .two-col{grid-template-columns:1fr;}
+  .lc-img{width:75px;height:56px;}
+  .mobile-nav{display:flex;}
+}
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);z-index:200;justify-content:space-around;padding:0.5rem 0;box-shadow:0 -2px 12px rgba(13,34,51,0.1);}
+.mobile-nav a{display:flex;flex-direction:column;align-items:center;gap:0.15rem;font-size:0.58rem;color:var(--grigio);text-decoration:none;padding:0.2rem 0.5rem;font-weight:500;transition:color 0.15s;}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--blu);}
+.mobile-nav a span{font-size:1.2rem;line-height:1;}
+@media(max-width:560px){body{padding-bottom:65px;}}
+#articleOverlay{display:none;position:fixed;inset:0;z-index:500;background:#fff;overflow-y:auto;}
+#articleOverlay.open{display:block;}
+.art-topbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding:0.7rem 1.5rem;display:flex;align-items:center;gap:1rem;z-index:10;}
+.art-back{display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;font-weight:600;color:var(--blu);cursor:pointer;background:none;border:none;padding:0.4rem 0.8rem;border-radius:20px;transition:background 0.15s;}
+.art-back:hover{background:var(--sabbia);}
+.art-topbar-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--blu);margin-left:auto;}
+.art-topbar-logo span{color:var(--oro);}
+.art-hero{width:100%;aspect-ratio:21/9;display:flex;align-items:center;justify-content:center;font-size:6rem;position:relative;overflow:hidden;}
+.art-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,34,51,0.7),transparent 50%);}
+.art-hero-title{position:absolute;bottom:0;left:0;right:0;padding:2rem;color:#fff;}
+.art-hero-cat{font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--oro);margin-bottom:0.5rem;}
+.art-hero-h1{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,2.2rem);font-weight:700;line-height:1.2;}
+.art-body{max-width:760px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
+.art-meta{display:flex;gap:1.5rem;font-size:0.75rem;color:var(--grigio);padding-bottom:1.5rem;border-bottom:1px solid var(--border);margin-bottom:2rem;flex-wrap:wrap;}
+.art-meta span{display:flex;align-items:center;gap:0.3rem;}
+.art-body h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin:2rem 0 0.8rem;color:var(--notte);}
+.art-body h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin:1.5rem 0 0.6rem;color:var(--blu);}
+.art-body p{font-size:0.95rem;line-height:1.85;color:#2A3A44;margin-bottom:1.2rem;}
+.art-body ul{margin:0.5rem 0 1.2rem 1.5rem;}
+.art-body li{font-size:0.92rem;line-height:1.8;color:#2A3A44;}
+.art-infobox{background:var(--sabbia);border-left:3px solid var(--blu);padding:1.2rem 1.5rem;margin:1.5rem 0;border-radius:0 6px 6px 0;}
+.art-infobox strong{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--blu);display:block;margin-bottom:0.5rem;}
+.art-infobox p{margin:0;font-size:0.85rem;color:var(--notte);}
+.art-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.art-related{background:var(--sabbia);padding:2rem 1.5rem;margin-top:2rem;}
+.art-related h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:1.2rem;}
+.art-related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+@media(max-width:560px){.art-related-grid{grid-template-columns:1fr;}.art-hero{aspect-ratio:16/9;font-size:4rem;}}
+.art-rel-card{background:#fff;border:1px solid var(--border);padding:1rem;cursor:pointer;transition:box-shadow 0.2s;}
+.art-rel-card:hover{box-shadow:0 2px 12px rgba(13,34,51,0.1);}
+.art-rel-cat{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blu);}
+.art-rel-title{font-family:'Playfair Display',serif;font-size:0.88rem;font-weight:700;margin-top:0.3rem;line-height:1.3;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-date" id="dataOggi"></span>
+    <div class="topbar-links">
+      <a href="#">Newsletter</a>
+      <a href="#">Mappa</a>
+      <a href="#">Contatti</a>
+    </div>
+    <span class="weather" id="meteoTop">⏳ Meteo…</span>
+  </div>
+</div>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-top">
+      <a class="logo" href="#">marsala<span>.blog</span></a>
+      <div class="nav-search">
+        <input type="text" placeholder="Cerca ristoranti, spiagge, eventi…">
+        <button class="nav-search-btn">🔍</button>
+      </div>
+    </div>
+    <div class="nav-cats">
+      <a class="nav-cat active" href="#ristoranti">🍝 Ristoranti</a>
+      <a class="nav-cat" href="#cantine">🍷 Cantine</a>
+      <a class="nav-cat" href="#spiagge">🏖 Spiagge</a>
+      <a class="nav-cat" href="#bnb">🏨 B&amp;B</a>
+      <a class="nav-cat" href="#divertimento">🎉 Divertimento</a>
+      <a class="nav-cat" href="#cultura">🏛 Cultura</a>
+      <a class="nav-cat" href="#eventi">📅 Eventi</a>
+      <a class="nav-cat" href="#egadi">⛵ Egadi</a>
+    </div>
+  </div>
+</nav>
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-label">🔵 In evidenza</span>
+    <div class="ticker-wrap"><span class="ticker-text">📰 Nuova sezione Notizie · 🌊 Stagione balneare aperta · 🍷 Inycon Wine Festival a ottobre · ☀️ Estate 2026: prenotazioni record alle Egadi · 🎶 Marsala Jazz Festival a giugno · 🏛 Museo del Satiro aperto tutti i giorni · 🚢 Traghetti per Favignana: 8 corse al giorno · 📰 Nuova sezione Notizie · 🌊 Stagione balneare aperta · 🍷 Inycon Wine Festival a ottobre</span></div>
+  </div>
+</div>
+<div class="container">
+  <section style="padding-top:2rem;padding-bottom:0;">
+    <div class="hero-grid">
+      <div class="hero-main">
+        <div class="hero-img" style="background:linear-gradient(135deg,#0D2233 0%,#1A6B9A 40%,#4AADE0 80%,#A8DCF0 100%);height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;">🌅</div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <span class="hero-cat">In primo piano</span>
+          <h1 class="hero-title">Le saline dello Stagnone al tramonto: lo spettacolo più bello della Sicilia</h1>
+          <p class="hero-sub">I mulini a vento, il sale rosa e i fenicotteri che volano bassi sull'acqua ferma. Un'ora prima del tramonto è il momento perfetto.</p>
+          <div class="hero-meta"><span>📍 Stagnone di Marsala</span><span>⏱ 3 min di lettura</span><span>👁 12.4k visualizzazioni</span></div>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="hero-side-item">
+          <div class="hs-img" style="height:100%;min-height:120px;background:linear-gradient(135deg,#1A3B4A,#C9923A);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🍷</div>
+          <div class="hs-overlay"></div>
+          <div class="hs-content"><div class="hs-cat">Cantine</div><div class="hs-title">Florio, Pellegrino e le 15 cantine storiche da visitare</div></div>
+        </div>
+        <div class="hero-side-item">
+          <div class="hs-img b2" style="height:100%;min-height:120px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏖</div>
+          <div class="hs-overlay"></div>
+          <div class="hs-content"><div class="hs-cat">Spiagge</div><div class="hs-title">Le 8 spiagge più belle tra Marsala e le Egadi</div></div>
+        </div>
+        <div class="hero-side-item">
+          <div class="hs-img b3" style="height:100%;min-height:120px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏛</div>
+          <div class="hs-overlay"></div>
+          <div class="hs-content"><div class="hs-cat">Cultura</div><div class="hs-title">Il Satiro danzante: l'opera che ha fatto il giro del mondo</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTIZIE -->
+  <section id="notizie">
+    <div class="sec-head"><h2 class="sec-title"><span>📰</span> Ultime Notizie</h2><a class="sec-more" href="#">Tutte le notizie →</a></div>
+    <div class="two-col">
+      <div id="notizie-lista">
+        <!-- Le notizie verranno inserite qui dall'editor -->
+        <div class="list-card">
+          <div class="lc-img"><div class="lc-img-bg ci2" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🌊</div></div>
+          <div class="lc-body">
+            <div class="lc-tag">Spiagge</div>
+            <div class="lc-title">Stagione balneare 2026: aperte tutte le spiagge attrezzate</div>
+            <div class="lc-meta">9 Giugno 2026 · Redazione marsala.blog</div>
+          </div>
+        </div>
+        <div class="list-card">
+          <div class="lc-img"><div class="lc-img-bg ci7" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🍷</div></div>
+          <div class="lc-body">
+            <div class="lc-tag">Vino</div>
+            <div class="lc-title">Inycon 2026: svelato il programma ufficiale del festival</div>
+            <div class="lc-meta">7 Giugno 2026 · Redazione marsala.blog</div>
+          </div>
+        </div>
+        <div class="list-card">
+          <div class="lc-img"><div class="lc-img-bg ci3" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🏛</div></div>
+          <div class="lc-body">
+            <div class="lc-tag">Cultura</div>
+            <div class="lc-title">Museo del Satiro: nuovi orari estivi e ingresso ridotto under 18</div>
+            <div class="lc-meta">5 Giugno 2026 · Redazione marsala.blog</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="info-box">
+          <div class="info-box-title">🔖 Argomenti</div>
+          <div class="tags">
+            <span class="tag">Spiagge</span><span class="tag">Vino</span><span class="tag">Cultura</span>
+            <span class="tag">Ristoranti</span><span class="tag">Egadi</span><span class="tag">Eventi</span>
+            <span class="tag">Meteo</span><span class="tag">Trasporti</span>
+          </div>
+        </div>
+        <div class="highlight">
+          <div class="highlight-label">Hai una segnalazione?</div>
+          <div class="highlight-title">Scrivi alla redazione</div>
+          <div class="highlight-text">Conosci una notizia su Marsala che vale la pena raccontare? Contattaci e la pubblichiamo.</div>
+          <a class="highlight-btn" href="#">Contattaci</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISTORANTI -->
+  <section id="ristoranti">
+    <div class="sec-head"><h2 class="sec-title"><span>🍝</span> Ristoranti</h2><a class="sec-more" href="#">Tutti i ristoranti →</a></div>
+    <div class="two-col">
+      <div class="card-grid cols3">
+        <div class="card"><div class="card-img"><div class="card-img-bg ci1" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🦐</div></div><div class="card-body"><div class="card-tag">Pesce fresco</div><div class="card-title">Il Porto — Cucina di mare autentica</div><div class="card-desc">Tonno fresco, gamberi rossi delle Egadi e pasta con le sarde. Sul lungomare, con vista sul porto storico.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">€€</span></div></div></div>
+        <div class="card"><div class="card-img"><div class="card-img-bg ci2" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🍕</div></div><div class="card-body"><div class="card-tag">Trattoria</div><div class="card-title">Trattoria da Nino — 50 anni di storia</div><div class="card-desc">La trattoria storica di Marsala. Caponata, arancine, pasta al forno: la vera cucina siciliana di una volta.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">€</span></div></div></div>
+        <div class="card"><div class="card-img"><div class="card-img-bg ci3" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🦑</div></div><div class="card-body"><div class="card-tag">Gourmet</div><div class="card-title">Saline — Cucina del territorio</div><div class="card-desc">Vista panoramica sulle saline, chef stellato e menù degustazione a base di prodotti tipici marsalesi.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">€€€</span></div></div></div>
+      </div>
+      <div>
+        <div class="info-box"><div class="info-box-title">🕐 Orari utili</div><div class="info-row"><span class="info-key">Pranzo</span><span class="info-val">12:30 – 15:00</span></div><div class="info-row"><span class="info-key">Cena</span><span class="info-val">19:30 – 23:00</span></div><div class="info-row"><span class="info-key">Chiusura tipica</span><span class="info-val">Lunedì</span></div><div class="info-row"><span class="info-key">Prenotazione</span><span class="info-val">Consigliata d'estate</span></div></div>
+        <div class="weather-widget" style="margin-top:1rem;"><div class="ww-title">Meteo Marsala oggi</div><div class="ww-temp" id="wwTemp">…°</div><div class="ww-desc" id="wwDesc">Caricamento…</div><div class="ww-row"><div class="ww-item"><strong>Umidità</strong><span id="wwHum">–</span></div><div class="ww-item"><strong>Vento</strong><span id="wwWind">–</span></div><div class="ww-item"><strong>Mare</strong>Calmo 🌊</div></div></div>
+      </div>
+    </div>
+    <div style="margin-top:1.5rem;">
+      <div class="list-card"><div class="lc-img"><div class="lc-img-bg ci4" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🍰</div></div><div class="lc-body"><div class="lc-tag">Dolci</div><div class="lc-title">Pasticceria Grammatico — I cannoli più buoni di Marsala</div><div class="lc-meta">Via Garibaldi, 32 · ★★★★★ · €</div></div></div>
+      <div class="list-card"><div class="lc-img"><div class="lc-img-bg ci5" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🍦</div></div><div class="lc-body"><div class="lc-tag">Gelateria</div><div class="lc-title">Gelato Artigianale al Pistacchio — Aperto fino alle 2:00</div><div class="lc-meta">Lungomare Boeo · ★★★★☆ · €</div></div></div>
+      <div class="list-card"><div class="lc-img"><div class="lc-img-bg ci6" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🥗</div></div><div class="lc-body"><div class="lc-tag">Street food</div><div class="lc-title">Mercato del Pesce — Colazione con pane e panelle</div><div class="lc-meta">Piazza del Popolo · Ogni mattina ore 7-13 · €</div></div></div>
+    </div>
+  </section>
+</div>
+
+<div class="promo">
+  <div class="promo-sub">Il vino più famoso di Sicilia</div>
+  <h2 class="promo-title">Scopri il Marsala DOC</h2>
+  <p class="promo-text">Dal 1773, il vino che ha conquistato il mondo. 15 cantine aprono le loro porte per degustazioni, tour guidati e acquisti diretti.</p>
+  <div class="promo-btns"><a class="btn-oro" href="#cantine">Visita le cantine</a><a class="btn-ghost" href="#">Storia del Marsala</a></div>
+</div>
+
+<div class="container">
+  <section id="cantine">
+    <div class="sec-head"><h2 class="sec-title"><span>🍷</span> Cantine</h2><a class="sec-more" href="#">Tutte le cantine →</a></div>
+    <div class="card-grid cols4">
+      <div class="card"><div class="card-img"><div class="card-img-bg ci7" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">🏛</div></div><div class="card-body"><div class="card-tag">Storica · dal 1833</div><div class="card-title">Florio</div><div class="card-desc">La cantina più famosa di Marsala. Tour con degustazione.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">€€</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci8" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">🍾</div></div><div class="card-body"><div class="card-tag">Storica · dal 1880</div><div class="card-title">Carlo Pellegrino</div><div class="card-desc">Produzione artigianale e vigneti storici da visitare.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">€€</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci9" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">🌿</div></div><div class="card-body"><div class="card-tag">Bio · moderna</div><div class="card-title">Donnafugata</div><div class="card-desc">Vini biologici e design raffinato. Degustazione su prenotazione.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">€€€</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci10" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">🍇</div></div><div class="card-body"><div class="card-tag">Piccola cantina</div><div class="card-title">Vitivinicola Lombardo</div><div class="card-desc">Cantina a conduzione familiare. Prezzi ottimi, qualità eccellente.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">€</span></div></div></div>
+    </div>
+  </section>
+  <section id="spiagge">
+    <div class="sec-head"><h2 class="sec-title"><span>🏖</span> Spiagge</h2><a class="sec-more" href="#">Tutte le spiagge →</a></div>
+    <div class="card-grid cols3">
+      <div class="card"><div class="card-img"><div class="card-img-bg ci11" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏖</div></div><div class="card-body"><div class="card-tag">Spiaggia urbana</div><div class="card-title">Lido di Marsala</div><div class="card-desc">Sabbia fine, acque poco profonde, perfette per le famiglie.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">Gratuita / Attrezzata</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci12" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🌊</div></div><div class="card-body"><div class="card-tag">Selvaggia</div><div class="card-title">Punta Alga — Spiaggia nascosta</div><div class="card-desc">Acqua cristallina, sabbia bianca, pochissimi turisti.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">Gratuita</span></div></div></div>
+      <div class="highlight"><div class="highlight-label">Da non perdere</div><div class="highlight-title">Isola di Favignana — "La farfalla"</div><div class="highlight-text">A soli 30 minuti di traghetto. Mare da cartolina, calette nascoste e l'ex tonnara da visitare.</div><a class="highlight-btn" href="#egadi">Scopri le Egadi</a></div>
+    </div>
+  </section>
+  <section id="bnb">
+    <div class="sec-head"><h2 class="sec-title"><span>🏨</span> B&amp;B e Hotel</h2><a class="sec-more" href="#">Tutte le strutture →</a></div>
+    <div class="two-col">
+      <div class="card-grid cols2">
+        <div class="card"><div class="card-img"><div class="card-img-bg ci1" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏰</div></div><div class="card-body"><div class="card-tag">Centro storico · Boutique</div><div class="card-title">Palazzo del Carmine</div><div class="card-desc">Palazzo nobiliare del '700 restaurato. 8 camere con affreschi originali.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">da €120/notte</span></div></div></div>
+        <div class="card"><div class="card-img"><div class="card-img-bg ci2" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🌾</div></div><div class="card-body"><div class="card-tag">Agriturismo · Vigneti</div><div class="card-title">Masseria Stagnone</div><div class="card-desc">In mezzo ai vigneti, a 2 km dalle saline.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">da €85/notte</span></div></div></div>
+        <div class="card"><div class="card-img"><div class="card-img-bg ci3" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🌊</div></div><div class="card-body"><div class="card-tag">Sul mare · Resort</div><div class="card-title">Hotel Lido Azzurro</div><div class="card-desc">Direttamente sul mare. Piscina, spiaggia privata, ristorante.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">da €95/notte</span></div></div></div>
+        <div class="card"><div class="card-img"><div class="card-img-bg ci4" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏡</div></div><div class="card-body"><div class="card-tag">B&amp;B · Economico</div><div class="card-title">Casa Balio</div><div class="card-desc">Nel cuore del centro storico. Piccolo e accogliente.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">da €45/notte</span></div></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="info-box"><div class="info-box-title">📋 Info pratiche</div><div class="info-row"><span class="info-key">Alta stagione</span><span class="info-val">Luglio – Agosto</span></div><div class="info-row"><span class="info-key">Miglior periodo</span><span class="info-val">Mag – Giu / Set</span></div><div class="info-row"><span class="info-key">Aeroporto</span><span class="info-val">Trapani (30 km)</span></div><div class="info-row"><span class="info-key">Da Palermo</span><span class="info-val">1h 45min auto</span></div></div>
+        <div class="info-box"><div class="info-box-title">🔖 Categorie</div><div class="tags"><span class="tag">Vista mare</span><span class="tag">Pet friendly</span><span class="tag">Piscina</span><span class="tag">Colazione inclusa</span><span class="tag">Centro storico</span><span class="tag">Agriturismo</span><span class="tag">Economico</span><span class="tag">Lusso</span></div></div>
+      </div>
+    </div>
+  </section>
+  <section id="divertimento">
+    <div class="sec-head"><h2 class="sec-title"><span>🎉</span> Divertimento &amp; Nightlife</h2><a class="sec-more" href="#">Scopri di più →</a></div>
+    <div class="card-grid cols3">
+      <div class="card"><div class="card-img"><div class="card-img-bg ci5" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🎵</div></div><div class="card-body"><div class="card-tag">Bar · Musica dal vivo</div><div class="card-title">Cantina Sociale — Aperitivi al tramonto</div><div class="card-desc">Dal giovedì alla domenica, musica jazz live e degustazione Marsala.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">€€</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci6" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🌙</div></div><div class="card-body"><div class="card-tag">Discoteca · Estate</div><div class="card-title">Lido Sunset — Beach club</div><div class="card-desc">Il beach club più frequentato di Marsala. DJ set dal tramonto.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">€€</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci7" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🎭</div></div><div class="card-body"><div class="card-tag">Teatro · Cultura</div><div class="card-title">Teatro Impero — Spettacoli estivi</div><div class="card-desc">Teatro storico con stagione estiva: concerti, teatro e cinema all'aperto.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">€</span></div></div></div>
+    </div>
+  </section>
+  <section id="cultura">
+    <div class="sec-head"><h2 class="sec-title"><span>🏛</span> Cultura &amp; Musei</h2><a class="sec-more" href="#">Tutti i musei →</a></div>
+    <div class="card-grid cols4">
+      <div class="card"><div class="card-img"><div class="card-img-bg ci8" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">🏺</div></div><div class="card-body"><div class="card-tag">Museo · Must see</div><div class="card-title">Museo del Satiro Danzante</div><div class="card-desc">Il bronzo greco più bello del Mediterraneo.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">€5</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci9" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">⛵</div></div><div class="card-body"><div class="card-tag">Archeologia</div><div class="card-title">Nave Punica al Museo Baglio Anselmi</div><div class="card-desc">La nave da guerra fenicia più antica del mondo, risalente al 241 a.C.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">€4</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci10" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">⛩</div></div><div class="card-body"><div class="card-tag">Isola · Sacra</div><div class="card-title">Mozia — Isola Fenicia</div><div class="card-desc">L'isola sacra dei Fenici, raggiungibile in barca.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">€6</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci11" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">⛪</div></div><div class="card-body"><div class="card-tag">Architettura</div><div class="card-title">Duomo di San Tommaso</div><div class="card-desc">La cattedrale barocca del centro con opere del XVII secolo.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">Gratuito</span></div></div></div>
+    </div>
+  </section>
+  <section id="eventi">
+    <div class="sec-head"><h2 class="sec-title"><span>📅</span> Prossimi eventi</h2><a class="sec-more" href="#">Calendario completo →</a></div>
+    <div class="card-grid cols3">
+      <div class="card" style="display:flex;gap:0;"><div style="background:var(--blu);color:#fff;padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;"><span style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;">14</span><span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.8;">GIU</span></div><div class="card-body"><div class="card-tag">Musica</div><div class="card-title">Marsala Jazz Festival — Opening Night</div><div class="card-desc">Piazza della Repubblica · ore 21:00 · Ingresso libero</div></div></div>
+      <div class="card" style="display:flex;gap:0;"><div style="background:var(--oro);color:var(--notte);padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;"><span style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;">15</span><span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.8;">AGO</span></div><div class="card-body"><div class="card-tag">Tradizione</div><div class="card-title">Festa di San Giovanni Battista</div><div class="card-desc">Processione, fuochi d'artificio sullo Stagnone · Ingresso libero</div></div></div>
+      <div class="card" style="display:flex;gap:0;"><div style="background:var(--notte);color:#fff;padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;"><span style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;">Oct</span><span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.6;">2026</span></div><div class="card-body"><div class="card-tag">Vino</div><div class="card-title">Inycon — Festival del Vino Marsala</div><div class="card-desc">4 giorni · Cantine aperte · Masterclass · Degustazioni</div></div></div>
+    </div>
+  </section>
+  <section id="egadi" style="background:var(--sabbia);margin:0 -1.5rem;padding:2.5rem 1.5rem;">
+    <div class="sec-head"><h2 class="sec-title"><span>⛵</span> Isole Egadi — a 30 min da Marsala</h2><a class="sec-more" href="#">Come arrivare →</a></div>
+    <div class="card-grid cols3">
+      <div class="card"><div class="card-img"><div class="card-img-bg ci12" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🦋</div></div><div class="card-body"><div class="card-tag">Isola principale</div><div class="card-title">Favignana — La Farfalla</div><div class="card-desc">L'isola più grande. Spiagge straordinarie, tonnara storica, bici per girarla tutta.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">Traghetto €12</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci1" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏛</div></div><div class="card-body"><div class="card-tag">Arte rupestre</div><div class="card-title">Levanzo — Grotta del Genovese</div><div class="card-desc">Dipinti rupestri preistorici tra i più importanti del Mediterraneo.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">Traghetto €14</span></div></div></div>
+      <div class="card"><div class="card-img"><div class="card-img-bg ci3" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🌿</div></div><div class="card-body"><div class="card-tag">Natura selvaggia</div><div class="card-title">Marettimo — L'isola più bella</div><div class="card-desc">La più lontana e selvaggia. Grotte marine, immersioni, trekking.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">Traghetto €18</span></div></div></div>
+    </div>
+  </section>
+</div>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#notizie"><span>📰</span>Notizie</a>
+  <a href="#ristoranti"><span>🍝</span>Ristoranti</a>
+  <a href="#cantine"><span>🍷</span>Cantine</a>
+  <a href="#spiagge"><span>🏖</span>Spiagge</a>
+  <a href="#bnb"><span>🏨</span>B&amp;B</a>
+  <a href="#divertimento"><span>🎉</span>Vita notturna</a>
+  <a href="#eventi"><span>📅</span>Eventi</a>
+</nav>
+
+<div id="articleOverlay">
+  <div class="art-topbar">
+    <button class="art-back" onclick="closeArticle()">← Torna indietro</button>
+    <span class="art-topbar-logo">marsala<span>.blog</span></span>
+  </div>
+  <div id="articleContent"></div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-logo">marsala<span>.blog</span></div><div class="footer-tagline">La guida turistica più completa di Marsala. Ristoranti, cantine, spiagge, B&B e tutto quello che devi sapere.</div></div>
+      <div><div class="footer-col-title">Scopri</div><div class="footer-links"><a href="#">Ristoranti</a><a href="#">Cantine e vino</a><a href="#">Spiagge</a><a href="#">B&B e Hotel</a><a href="#">Musei</a><a href="#">Isole Egadi</a></div></div>
+      <div><div class="footer-col-title">Info utili</div><div class="footer-links"><a href="#">Come arrivare</a><a href="#">Trasporti locali</a><a href="#">Meteo</a><a href="#">Calendario eventi</a><a href="#">Mappa interattiva</a></div></div>
+      <div><div class="footer-col-title">Contatti</div><div class="footer-links"><a href="#">Segnala un posto</a><a href="#">Pubblicità</a><a href="#">Newsletter</a><a href="#">Privacy Policy</a></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 marsala.blog — Porta del Mediterraneo · Marsala, Sicilia Occidentale</span><span>Made with ❤️ in Sicilia</span></div>
+  </div>
+</footer>
+
+<script>
+const codiciMeteo = {0:'Soleggiato ☀️',1:'Quasi sereno 🌤',2:'Parzialmente nuvoloso ⛅',3:'Nuvoloso ☁️',45:'Nebbia 🌫',51:'Pioggerella 🌦',61:'Pioggia 🌧',80:'Rovesci 🌦',95:'Temporale ⛈'};
+fetch('https://api.open-meteo.com/v1/forecast?latitude=37.7969&longitude=12.4352&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&wind_speed_unit=kmh&timezone=Europe/Rome')
+  .then(r=>r.json()).then(d=>{
+    const c=d.current;
+    const temp=Math.round(c.temperature_2m);
+    const desc=codiciMeteo[c.weather_code]||'–';
+    document.getElementById('meteoTop').textContent=desc.split(' ')[1]+' '+temp+'°C · Marsala, Sicilia';
+    document.getElementById('wwTemp').textContent=temp+'°';
+    document.getElementById('wwDesc').textContent=desc;
+    document.getElementById('wwHum').textContent=c.relative_humidity_2m+'%';
+    document.getElementById('wwWind').textContent=Math.round(c.wind_speed_10m)+' km/h';
+  }).catch(()=>{document.getElementById('meteoTop').textContent='☀️ Marsala, Sicilia';});
+const oggi=new Date();
+document.getElementById('dataOggi').textContent=oggi.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).replace(/^\w/,c=>c.toUpperCase());
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});
+});
+const cats=document.querySelectorAll('.nav-cat');
+const mobLinks=document.querySelectorAll('.mobile-nav a');
+const secs=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id;});
+  cats.forEach(c=>{c.classList.toggle('active',c.getAttribute('href')==='#'+cur);});
+  mobLinks.forEach(c=>{c.classList.toggle('active',c.getAttribute('href')==='#'+cur);});
+});
+</script>
+</body>
+</html>
