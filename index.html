@@ -20,6 +20,148 @@
 }
 html{scroll-behavior:smooth;}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--notte);font-size:15px;}
+
+/* ═══════════════════════════════════════════
+   BANNER EVENTI IN PRIMO PIANO
+═══════════════════════════════════════════ */
+.eventi-banner{
+  background:linear-gradient(90deg,#0D2233 0%,#1A3D5C 40%,#1A6B9A 100%);
+  border-bottom:3px solid var(--oro);
+  padding:0;
+  overflow:hidden;
+  position:relative;
+}
+.eventi-banner::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(ellipse at 80% 50%,rgba(232,160,32,0.12) 0%,transparent 60%);
+  pointer-events:none;
+}
+.eventi-banner-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 1.5rem;
+  display:flex;
+  align-items:stretch;
+  gap:0;
+  min-height:72px;
+}
+.eventi-banner-label{
+  background:var(--oro);
+  color:var(--notte);
+  font-size:0.58rem;
+  font-weight:800;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  padding:0 1.2rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  gap:0.15rem;
+  line-height:1.2;
+  text-align:center;
+}
+.eventi-banner-label .label-icon{
+  font-size:1.4rem;
+  line-height:1;
+}
+.eventi-banner-scroll{
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:0;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding:0.6rem 0;
+}
+.eventi-banner-scroll::-webkit-scrollbar{display:none;}
+.evento-pill{
+  display:flex;
+  align-items:center;
+  gap:0.9rem;
+  padding:0.55rem 1.2rem 0.55rem 1rem;
+  border-left:1px solid rgba(255,255,255,0.1);
+  flex-shrink:0;
+  cursor:pointer;
+  transition:background 0.15s;
+  border-radius:0;
+}
+.evento-pill:hover{background:rgba(255,255,255,0.07);}
+.evento-pill-mese{
+  background:var(--oro);
+  color:var(--notte);
+  font-size:0.6rem;
+  font-weight:800;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  padding:0.3rem 0.5rem;
+  border-radius:3px;
+  flex-shrink:0;
+  line-height:1;
+  min-width:38px;
+  text-align:center;
+}
+.evento-pill-mese.mese-blu{background:rgba(74,173,224,0.25);color:#4AADE0;border:1px solid rgba(74,173,224,0.3);}
+.evento-pill-mese.mese-ghost{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.15);}
+.evento-pill-info{}
+.evento-pill-cat{
+  font-size:0.58rem;
+  font-weight:600;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.45);
+  line-height:1;
+  margin-bottom:0.2rem;
+}
+.evento-pill-nome{
+  font-family:'Playfair Display',serif;
+  font-size:0.88rem;
+  font-weight:700;
+  color:#fff;
+  line-height:1.2;
+  white-space:nowrap;
+}
+.evento-pill-luogo{
+  font-size:0.68rem;
+  color:rgba(255,255,255,0.45);
+  margin-top:0.15rem;
+  white-space:nowrap;
+}
+.eventi-banner-cta{
+  display:flex;
+  align-items:center;
+  padding:0 0 0 1rem;
+  flex-shrink:0;
+}
+.eventi-banner-cta a{
+  display:inline-block;
+  padding:0.5rem 1.1rem;
+  background:transparent;
+  border:1px solid rgba(232,160,32,0.5);
+  color:var(--oro);
+  font-size:0.68rem;
+  font-weight:700;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  text-decoration:none;
+  border-radius:2px;
+  white-space:nowrap;
+  transition:all 0.15s;
+}
+.eventi-banner-cta a:hover{background:var(--oro);color:var(--notte);}
+@media(max-width:768px){
+  .eventi-banner-inner{min-height:60px;}
+  .eventi-banner-cta{display:none;}
+  .evento-pill-nome{font-size:0.8rem;}
+}
+@media(max-width:560px){
+  .eventi-banner-label .label-text{display:none;}
+  .eventi-banner-label{padding:0 0.8rem;}
+}
+
 .topbar{background:var(--blu);color:#fff;padding:0.35rem 0;font-size:0.7rem;border-bottom:2px solid var(--oro);}
 .topbar-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
 .topbar-date{opacity:0.75;letter-spacing:0.05em;}
@@ -226,9 +368,89 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
 .art-rel-card:hover{box-shadow:0 2px 12px rgba(13,34,51,0.1);}
 .art-rel-cat{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blu);}
 .art-rel-title{font-family:'Playfair Display',serif;font-size:0.88rem;font-weight:700;margin-top:0.3rem;line-height:1.3;}
+
+/* Evento card sezione - solo mese */
+.evento-card-mese{
+  background:var(--blu);
+  color:#fff;
+  padding:1.2rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-width:70px;
+  font-family:'Playfair Display',serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  line-height:1.1;
+  text-align:center;
+}
+.evento-card-mese.oro{background:var(--oro);color:var(--notte);}
+.evento-card-mese.notte{background:var(--notte);color:#fff;}
+.evento-card-mese .mese-sub{font-size:0.6rem;letter-spacing:0.15em;opacity:0.7;font-family:'Inter',sans-serif;font-weight:600;margin-top:0.3rem;}
 </style>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════════════
+     BANNER PROSSIMI EVENTI — TOP OF PAGE
+═══════════════════════════════════════════ -->
+<div class="eventi-banner">
+  <div class="eventi-banner-inner">
+    <div class="eventi-banner-label">
+      <span class="label-icon">📅</span>
+      <span class="label-text">Prossimi<br>eventi</span>
+    </div>
+    <div class="eventi-banner-scroll">
+      <div class="evento-pill">
+        <div class="evento-pill-mese">GIU</div>
+        <div class="evento-pill-info">
+          <div class="evento-pill-cat">Musica</div>
+          <div class="evento-pill-nome">Marsala Jazz Festival</div>
+          <div class="evento-pill-luogo">📍 Piazza della Repubblica · Ingresso libero</div>
+        </div>
+      </div>
+      <div class="evento-pill">
+        <div class="evento-pill-mese mese-blu">LUG</div>
+        <div class="evento-pill-info">
+          <div class="evento-pill-cat">Mare & Natura</div>
+          <div class="evento-pill-nome">Apertura Riserva Stagnone</div>
+          <div class="evento-pill-luogo">📍 Laguna dello Stagnone · Kayak & snorkeling</div>
+        </div>
+      </div>
+      <div class="evento-pill">
+        <div class="evento-pill-mese">AGO</div>
+        <div class="evento-pill-info">
+          <div class="evento-pill-cat">Tradizione</div>
+          <div class="evento-pill-nome">Festa di San Giovanni Battista</div>
+          <div class="evento-pill-luogo">📍 Centro storico · Fuochi d'artificio</div>
+        </div>
+      </div>
+      <div class="evento-pill">
+        <div class="evento-pill-mese mese-blu">SET</div>
+        <div class="evento-pill-info">
+          <div class="evento-pill-cat">Gastronomia</div>
+          <div class="evento-pill-nome">Sagra del Tonno Rosso</div>
+          <div class="evento-pill-luogo">📍 Porto di Marsala · Degustazioni gratuite</div>
+        </div>
+      </div>
+      <div class="evento-pill">
+        <div class="evento-pill-mese mese-ghost">OTT</div>
+        <div class="evento-pill-info">
+          <div class="evento-pill-cat">Vino</div>
+          <div class="evento-pill-nome">Inycon — Festival del Vino Marsala</div>
+          <div class="evento-pill-luogo">📍 Cantine aperte · 4 giorni di degustazioni</div>
+        </div>
+      </div>
+    </div>
+    <div class="eventi-banner-cta">
+      <a href="#eventi">Calendario completo →</a>
+    </div>
+  </div>
+</div>
+
 <div class="topbar">
   <div class="topbar-inner">
     <span class="topbar-date" id="dataOggi"></span>
@@ -305,7 +527,6 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
     <div class="sec-head"><h2 class="sec-title"><span>📰</span> Ultime Notizie</h2><a class="sec-more" href="#">Tutte le notizie →</a></div>
     <div class="two-col">
       <div id="notizie-lista">
-        <!-- Le notizie verranno inserite qui dall'editor -->
         <div class="list-card">
           <div class="lc-img"><div class="lc-img-bg ci2" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🌊</div></div>
           <div class="lc-body">
@@ -429,14 +650,38 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
       <div class="card"><div class="card-img"><div class="card-img-bg ci11" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">⛪</div></div><div class="card-body"><div class="card-tag">Architettura</div><div class="card-title">Duomo di San Tommaso</div><div class="card-desc">La cattedrale barocca del centro con opere del XVII secolo.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">Gratuito</span></div></div></div>
     </div>
   </section>
+
+  <!-- EVENTI — solo mese, niente giorno/anno -->
   <section id="eventi">
     <div class="sec-head"><h2 class="sec-title"><span>📅</span> Prossimi eventi</h2><a class="sec-more" href="#">Calendario completo →</a></div>
     <div class="card-grid cols3">
-      <div class="card" style="display:flex;gap:0;"><div style="background:var(--blu);color:#fff;padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;"><span style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;">14</span><span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.8;">GIU</span></div><div class="card-body"><div class="card-tag">Musica</div><div class="card-title">Marsala Jazz Festival — Opening Night</div><div class="card-desc">Piazza della Repubblica · ore 21:00 · Ingresso libero</div></div></div>
-      <div class="card" style="display:flex;gap:0;"><div style="background:var(--oro);color:var(--notte);padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;"><span style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;">15</span><span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.8;">AGO</span></div><div class="card-body"><div class="card-tag">Tradizione</div><div class="card-title">Festa di San Giovanni Battista</div><div class="card-desc">Processione, fuochi d'artificio sullo Stagnone · Ingresso libero</div></div></div>
-      <div class="card" style="display:flex;gap:0;"><div style="background:var(--notte);color:#fff;padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;"><span style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;">Oct</span><span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.6;">2026</span></div><div class="card-body"><div class="card-tag">Vino</div><div class="card-title">Inycon — Festival del Vino Marsala</div><div class="card-desc">4 giorni · Cantine aperte · Masterclass · Degustazioni</div></div></div>
+      <div class="card" style="display:flex;gap:0;">
+        <div class="evento-card-mese">GIU<div class="mese-sub">Giugno</div></div>
+        <div class="card-body">
+          <div class="card-tag">Musica</div>
+          <div class="card-title">Marsala Jazz Festival — Opening Night</div>
+          <div class="card-desc">Piazza della Repubblica · ore 21:00 · Ingresso libero</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:0;">
+        <div class="evento-card-mese oro">AGO<div class="mese-sub">Agosto</div></div>
+        <div class="card-body">
+          <div class="card-tag">Tradizione</div>
+          <div class="card-title">Festa di San Giovanni Battista</div>
+          <div class="card-desc">Processione, fuochi d'artificio sullo Stagnone · Ingresso libero</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:0;">
+        <div class="evento-card-mese notte">OTT<div class="mese-sub">Ottobre</div></div>
+        <div class="card-body">
+          <div class="card-tag">Vino</div>
+          <div class="card-title">Inycon — Festival del Vino Marsala</div>
+          <div class="card-desc">4 giorni · Cantine aperte · Masterclass · Degustazioni</div>
+        </div>
+      </div>
     </div>
   </section>
+
   <section id="egadi" style="background:var(--sabbia);margin:0 -1.5rem;padding:2.5rem 1.5rem;">
     <div class="sec-head"><h2 class="sec-title"><span>⛵</span> Isole Egadi — a 30 min da Marsala</h2><a class="sec-more" href="#">Come arrivare →</a></div>
     <div class="card-grid cols3">
