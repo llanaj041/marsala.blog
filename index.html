@@ -224,8 +224,31 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
 @media(max-width:560px){.art-related-grid{grid-template-columns:1fr;}.art-hero{aspect-ratio:16/9;font-size:4rem;}}
 .art-rel-card{background:#fff;border:1px solid var(--border);padding:1rem;cursor:pointer;transition:box-shadow 0.2s;}
 .art-rel-card:hover{box-shadow:0 2px 12px rgba(13,34,51,0.1);}
-.art-rel-cat{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blu);}
-.art-rel-title{font-family:'Playfair Display',serif;font-size:0.88rem;font-weight:700;margin-top:0.3rem;line-height:1.3;}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:600;background:rgba(13,34,51,0.65);overflow-y:auto;padding:2rem 1rem;}
+.modal-overlay.open{display:flex;align-items:flex-start;justify-content:center;}
+.modal-box{background:#fff;width:100%;max-width:860px;border-radius:4px;overflow:hidden;animation:modalIn 0.2s ease;}
+@keyframes modalIn{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
+.modal-head{background:var(--blu);color:#fff;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.modal-head-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;}
+.modal-close{background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;opacity:0.8;line-height:1;padding:0.2rem 0.5rem;transition:opacity 0.15s;}
+.modal-close:hover{opacity:1;}
+.modal-body{padding:1.5rem;}
+.search-overlay{display:none;position:fixed;inset:0;z-index:700;background:rgba(13,34,51,0.75);padding:4rem 1rem 2rem;}
+.search-overlay.open{display:block;}
+.search-box{background:#fff;max-width:700px;margin:0 auto;border-radius:4px;overflow:hidden;box-shadow:0 8px 40px rgba(13,34,51,0.2);}
+.search-input-row{display:flex;align-items:center;padding:0.8rem 1rem;border-bottom:1px solid var(--border);gap:0.5rem;}
+.search-input-row input{flex:1;border:none;outline:none;font-size:1rem;font-family:'Inter',sans-serif;color:var(--notte);}
+.search-input-row input::placeholder{color:var(--grigio);}
+.search-close-btn{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--grigio);padding:0.3rem;}
+.search-results{padding:1rem;max-height:420px;overflow-y:auto;}
+.search-result-item{display:flex;align-items:center;gap:0.8rem;padding:0.7rem 0.5rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s;border-radius:2px;}
+.search-result-item:last-child{border-bottom:none;}
+.search-result-item:hover{background:var(--sabbia);}
+.search-result-icon{font-size:1.4rem;width:36px;text-align:center;flex-shrink:0;}
+.search-result-info{}
+.search-result-cat{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blu);}
+.search-result-name{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--notte);line-height:1.3;}
+.search-empty{text-align:center;padding:2rem;color:var(--grigio);font-size:0.88rem;}
 </style>
 </head>
 <body>
@@ -233,9 +256,9 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
   <div class="topbar-inner">
     <span class="topbar-date" id="dataOggi"></span>
     <div class="topbar-links">
-      <a href="#">Newsletter</a>
+      <a href="mailto:marsalablog86@gmail.com">Newsletter</a>
       <a href="#">Mappa</a>
-      <a href="#">Contatti</a>
+      <a href="mailto:marsalablog86@gmail.com">Contatti</a>
     </div>
     <span class="weather" id="meteoTop">⏳ Meteo…</span>
   </div>
@@ -250,13 +273,13 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
       </div>
     </div>
     <div class="nav-cats">
+      <a class="nav-cat" href="#bnb-consigliati" onclick="openModal('bnbModal');return false;">🏨 B&amp;B Consigliati</a>
       <a class="nav-cat active" href="#ristoranti">🍝 Ristoranti</a>
       <a class="nav-cat" href="#cantine">🍷 Cantine</a>
       <a class="nav-cat" href="#spiagge">🏖 Spiagge</a>
-      <a class="nav-cat" href="#bnb">🏨 B&amp;B</a>
       <a class="nav-cat" href="#divertimento">🎉 Divertimento</a>
       <a class="nav-cat" href="#cultura">🏛 Cultura</a>
-      <a class="nav-cat" href="#eventi">📅 Eventi</a>
+      <a class="nav-cat" href="#eventi" onclick="openModal('eventiModal');return false;">📅 Eventi</a>
       <a class="nav-cat" href="#egadi">⛵ Egadi</a>
     </div>
   </div>
@@ -302,7 +325,7 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
 
   <!-- NOTIZIE -->
   <section id="notizie">
-    <div class="sec-head"><h2 class="sec-title"><span>📰</span> Ultime Notizie</h2><a class="sec-more" href="#">Tutte le notizie →</a></div>
+    <div class="sec-head"><h2 class="sec-title" style="cursor:pointer;" onclick="openModal('notizieModal')"><span>📰</span> Ultime Notizie</h2><a class="sec-more" href="#" onclick="openModal('notizieModal');return false;">Tutte le notizie →</a></div>
     <div class="two-col">
       <div id="notizie-lista">
         <!-- Le notizie verranno inserite qui dall'editor -->
@@ -397,8 +420,8 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
       <div class="highlight"><div class="highlight-label">Da non perdere</div><div class="highlight-title">Isola di Favignana — "La farfalla"</div><div class="highlight-text">A soli 30 minuti di traghetto. Mare da cartolina, calette nascoste e l'ex tonnara da visitare.</div><a class="highlight-btn" href="#egadi">Scopri le Egadi</a></div>
     </div>
   </section>
-  <section id="bnb">
-    <div class="sec-head"><h2 class="sec-title"><span>🏨</span> B&amp;B e Hotel</h2><a class="sec-more" href="#">Tutte le strutture →</a></div>
+  <section id="bnb-consigliati">
+    <div class="sec-head"><h2 class="sec-title" style="cursor:pointer;" onclick="openModal('bnbModal')"><span>🏨</span> B&amp;B Consigliati</h2><a class="sec-more" href="#" onclick="openModal('bnbModal');return false;">Tutte le strutture →</a></div>
     <div class="two-col">
       <div class="card-grid cols2">
         <div class="card"><div class="card-img"><div class="card-img-bg ci1" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏰</div></div><div class="card-body"><div class="card-tag">Centro storico · Boutique</div><div class="card-title">Palazzo del Carmine</div><div class="card-desc">Palazzo nobiliare del '700 restaurato. 8 camere con affreschi originali.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">da €120/notte</span></div></div></div>
@@ -430,11 +453,11 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
     </div>
   </section>
   <section id="eventi">
-    <div class="sec-head"><h2 class="sec-title"><span>📅</span> Prossimi eventi</h2><a class="sec-more" href="#">Calendario completo →</a></div>
+    <div class="sec-head"><h2 class="sec-title" style="cursor:pointer;" onclick="openModal('eventiModal')"><span>📅</span> Prossimi eventi</h2><a class="sec-more" href="#" onclick="openModal('eventiModal');return false;">Calendario completo →</a></div>
     <div class="card-grid cols3">
-      <div class="card" style="display:flex;gap:0;"><div style="background:var(--blu);color:#fff;padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;"><span style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;">14</span><span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.8;">GIU</span></div><div class="card-body"><div class="card-tag">Musica</div><div class="card-title">Marsala Jazz Festival — Opening Night</div><div class="card-desc">Piazza della Repubblica · ore 21:00 · Ingresso libero</div></div></div>
-      <div class="card" style="display:flex;gap:0;"><div style="background:var(--oro);color:var(--notte);padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;"><span style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;">15</span><span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.8;">AGO</span></div><div class="card-body"><div class="card-tag">Tradizione</div><div class="card-title">Festa di San Giovanni Battista</div><div class="card-desc">Processione, fuochi d'artificio sullo Stagnone · Ingresso libero</div></div></div>
-      <div class="card" style="display:flex;gap:0;"><div style="background:var(--notte);color:#fff;padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;"><span style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;">Oct</span><span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.6;">2026</span></div><div class="card-body"><div class="card-tag">Vino</div><div class="card-title">Inycon — Festival del Vino Marsala</div><div class="card-desc">4 giorni · Cantine aperte · Masterclass · Degustazioni</div></div></div>
+      <div class="card" style="display:flex;gap:0;cursor:pointer;" onclick="openModal('eventiModal')"><div style="background:var(--blu);color:#fff;padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;text-align:center;line-height:1.2;">GIU<span style="font-size:0.6rem;letter-spacing:0.15em;opacity:0.7;font-family:'Inter',sans-serif;font-weight:600;margin-top:0.3rem;display:block;">Giugno</span></div><div class="card-body"><div class="card-tag">Musica</div><div class="card-title">Marsala Jazz Festival — Opening Night</div><div class="card-desc">Piazza della Repubblica · ore 21:00 · Ingresso libero</div></div></div>
+      <div class="card" style="display:flex;gap:0;cursor:pointer;" onclick="openModal('eventiModal')"><div style="background:var(--oro);color:var(--notte);padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;text-align:center;line-height:1.2;">AGO<span style="font-size:0.6rem;letter-spacing:0.15em;opacity:0.7;font-family:'Inter',sans-serif;font-weight:600;margin-top:0.3rem;display:block;">Agosto</span></div><div class="card-body"><div class="card-tag">Tradizione</div><div class="card-title">Festa di San Giovanni Battista</div><div class="card-desc">Processione, fuochi d'artificio sullo Stagnone · Ingresso libero</div></div></div>
+      <div class="card" style="display:flex;gap:0;cursor:pointer;" onclick="openModal('eventiModal')"><div style="background:var(--notte);color:#fff;padding:1.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;text-align:center;line-height:1.2;">OTT<span style="font-size:0.6rem;letter-spacing:0.15em;opacity:0.7;font-family:'Inter',sans-serif;font-weight:600;margin-top:0.3rem;display:block;">Ottobre</span></div><div class="card-body"><div class="card-tag">Vino</div><div class="card-title">Inycon — Festival del Vino Marsala</div><div class="card-desc">4 giorni · Cantine aperte · Masterclass · Degustazioni</div></div></div>
     </div>
   </section>
   <section id="egadi" style="background:var(--sabbia);margin:0 -1.5rem;padding:2.5rem 1.5rem;">
@@ -448,18 +471,98 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
 </div>
 
 <nav class="mobile-nav" id="mobileNav">
-  <a href="#notizie"><span>📰</span>Notizie</a>
+  <a href="#bnb-consigliati" onclick="openModal('bnbModal');return false;"><span>🏨</span>B&amp;B</a>
+  <a href="#notizie" onclick="openModal('notizieModal');return false;"><span>📰</span>Notizie</a>
   <a href="#ristoranti"><span>🍝</span>Ristoranti</a>
   <a href="#cantine"><span>🍷</span>Cantine</a>
   <a href="#spiagge"><span>🏖</span>Spiagge</a>
-  <a href="#bnb"><span>🏨</span>B&amp;B</a>
   <a href="#divertimento"><span>🎉</span>Vita notturna</a>
-  <a href="#eventi"><span>📅</span>Eventi</a>
+  <a href="#eventi" onclick="openModal('eventiModal');return false;"><span>📅</span>Eventi</a>
 </nav>
 
-<div id="articleOverlay">
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay" onclick="closeSearch(event)">
+  <div class="search-box" onclick="event.stopPropagation()">
+    <div class="search-input-row">
+      <span style="font-size:1.1rem;color:var(--grigio);">🔍</span>
+      <input type="text" id="searchInput" placeholder="Cerca ristoranti, spiagge, eventi, cantine…" oninput="doSearch(this.value)" autofocus>
+      <button class="search-close-btn" onclick="closeSearch()">✕</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-empty">Inizia a digitare per cercare…</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NOTIZIE -->
+<div class="modal-overlay" id="notizieModal" onclick="closeModalOutside(event,'notizieModal')">
+  <div class="modal-box">
+    <div class="modal-head"><span class="modal-head-title">📰 Ultime Notizie</span><button class="modal-close" onclick="closeModal('notizieModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="list-card"><div class="lc-img"><div class="lc-img-bg ci2" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🌊</div></div><div class="lc-body"><div class="lc-tag">Spiagge</div><div class="lc-title">Stagione balneare 2026: aperte tutte le spiagge attrezzate</div><div class="lc-meta">9 Giugno 2026 · Redazione marsala.blog</div></div></div>
+      <div class="list-card"><div class="lc-img"><div class="lc-img-bg ci7" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🍷</div></div><div class="lc-body"><div class="lc-tag">Vino</div><div class="lc-title">Inycon 2026: svelato il programma ufficiale del festival</div><div class="lc-meta">7 Giugno 2026 · Redazione marsala.blog</div></div></div>
+      <div class="list-card"><div class="lc-img"><div class="lc-img-bg ci3" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🏛</div></div><div class="lc-body"><div class="lc-tag">Cultura</div><div class="lc-title">Museo del Satiro: nuovi orari estivi e ingresso ridotto under 18</div><div class="lc-meta">5 Giugno 2026 · Redazione marsala.blog</div></div></div>
+      <div class="list-card"><div class="lc-img"><div class="lc-img-bg ci11" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🚢</div></div><div class="lc-body"><div class="lc-tag">Trasporti</div><div class="lc-title">Traghetti per Favignana: da giugno 8 corse al giorno</div><div class="lc-meta">3 Giugno 2026 · Redazione marsala.blog</div></div></div>
+      <div class="list-card"><div class="lc-img"><div class="lc-img-bg ci5" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🎶</div></div><div class="lc-body"><div class="lc-tag">Musica</div><div class="lc-title">Marsala Jazz Festival: annunciati i primi artisti</div><div class="lc-meta">1 Giugno 2026 · Redazione marsala.blog</div></div></div>
+      <div style="text-align:center;padding:1.2rem 0 0.5rem;"><a href="mailto:marsalablog86@gmail.com" style="font-size:0.78rem;color:var(--blu);font-weight:600;">✉️ Segnala una notizia: marsalablog86@gmail.com</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL B&B CONSIGLIATI -->
+<div class="modal-overlay" id="bnbModal" onclick="closeModalOutside(event,'bnbModal')">
+  <div class="modal-box">
+    <div class="modal-head"><span class="modal-head-title">🏨 B&amp;B Consigliati</span><button class="modal-close" onclick="closeModal('bnbModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="card-grid cols2" style="margin-bottom:1rem;">
+        <div class="card"><div class="card-img"><div class="card-img-bg ci1" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏰</div></div><div class="card-body"><div class="card-tag">Centro storico · Boutique</div><div class="card-title">Palazzo del Carmine</div><div class="card-desc">Palazzo nobiliare del '700 restaurato. 8 camere con affreschi originali.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">da €120/notte</span></div></div></div>
+        <div class="card"><div class="card-img"><div class="card-img-bg ci2" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🌾</div></div><div class="card-body"><div class="card-tag">Agriturismo · Vigneti</div><div class="card-title">Masseria Stagnone</div><div class="card-desc">In mezzo ai vigneti, a 2 km dalle saline. Colazione con prodotti biologici.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">da €85/notte</span></div></div></div>
+        <div class="card"><div class="card-img"><div class="card-img-bg ci3" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🌊</div></div><div class="card-body"><div class="card-tag">Sul mare · Resort</div><div class="card-title">Hotel Lido Azzurro</div><div class="card-desc">Direttamente sul mare. Piscina, spiaggia privata, ristorante.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">da €95/notte</span></div></div></div>
+        <div class="card"><div class="card-img"><div class="card-img-bg ci4" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏡</div></div><div class="card-body"><div class="card-tag">B&amp;B · Economico</div><div class="card-title">Casa Balio</div><div class="card-desc">Nel cuore del centro storico. Piccolo e accogliente.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">da €45/notte</span></div></div></div>
+        <div class="card"><div class="card-img"><div class="card-img-bg ci6" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🌿</div></div><div class="card-body"><div class="card-tag">Wellness · Spa</div><div class="card-title">Villa delle Saline</div><div class="card-desc">Vista panoramica sulle saline. Piscina infinity, trattamenti benessere.</div><div class="card-meta"><span class="card-rating">★★★★★</span><span class="card-price">da €150/notte</span></div></div></div>
+        <div class="card"><div class="card-img"><div class="card-img-bg ci9" style="display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🐾</div></div><div class="card-body"><div class="card-tag">Pet friendly · Giardino</div><div class="card-title">Il Baglio del Sole</div><div class="card-desc">Ampio giardino con ulivi. Animali benvenuti, parcheggio gratuito.</div><div class="card-meta"><span class="card-rating">★★★★☆</span><span class="card-price">da €65/notte</span></div></div></div>
+      </div>
+      <div style="text-align:center;padding:0.5rem;"><a href="mailto:marsalablog86@gmail.com" style="font-size:0.78rem;color:var(--blu);font-weight:600;">✉️ Segnala la tua struttura: marsalablog86@gmail.com</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EVENTI -->
+<div class="modal-overlay" id="eventiModal" onclick="closeModalOutside(event,'eventiModal')">
+  <div class="modal-box">
+    <div class="modal-head"><span class="modal-head-title">📅 Calendario Eventi 2026</span><button class="modal-close" onclick="closeModal('eventiModal')">✕</button></div>
+    <div class="modal-body">
+      <div style="display:flex;flex-direction:column;gap:0.8rem;">
+        <div class="list-card" style="border:1px solid var(--border);border-radius:2px;padding:0.8rem;">
+          <div style="background:var(--blu);color:#fff;padding:0.8rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:60px;border-radius:2px;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;text-transform:uppercase;text-align:center;flex-shrink:0;">GIU<span style="font-size:0.58rem;font-family:'Inter',sans-serif;opacity:0.8;font-weight:600;letter-spacing:0.1em;">Giugno</span></div>
+          <div class="lc-body"><div class="lc-tag">Musica</div><div class="lc-title">Marsala Jazz Festival — Opening Night</div><div class="lc-meta">📍 Piazza della Repubblica · ore 21:00 · Ingresso libero</div></div>
+        </div>
+        <div class="list-card" style="border:1px solid var(--border);border-radius:2px;padding:0.8rem;">
+          <div style="background:#4AADE0;color:#0D2233;padding:0.8rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:60px;border-radius:2px;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;text-transform:uppercase;text-align:center;flex-shrink:0;">LUG<span style="font-size:0.58rem;font-family:'Inter',sans-serif;opacity:0.8;font-weight:600;letter-spacing:0.1em;">Luglio</span></div>
+          <div class="lc-body"><div class="lc-tag">Mare &amp; Natura</div><div class="lc-title">Apertura Riserva Stagnone — Kayak e snorkeling</div><div class="lc-meta">📍 Laguna dello Stagnone · Prenotazione consigliata</div></div>
+        </div>
+        <div class="list-card" style="border:1px solid var(--border);border-radius:2px;padding:0.8rem;">
+          <div style="background:var(--oro);color:var(--notte);padding:0.8rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:60px;border-radius:2px;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;text-transform:uppercase;text-align:center;flex-shrink:0;">AGO<span style="font-size:0.58rem;font-family:'Inter',sans-serif;opacity:0.7;font-weight:600;letter-spacing:0.1em;">Agosto</span></div>
+          <div class="lc-body"><div class="lc-tag">Tradizione</div><div class="lc-title">Festa di San Giovanni Battista</div><div class="lc-meta">📍 Centro storico · Processione e fuochi d'artificio sullo Stagnone · Ingresso libero</div></div>
+        </div>
+        <div class="list-card" style="border:1px solid var(--border);border-radius:2px;padding:0.8rem;">
+          <div style="background:#C9923A;color:#fff;padding:0.8rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:60px;border-radius:2px;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;text-transform:uppercase;text-align:center;flex-shrink:0;">SET<span style="font-size:0.58rem;font-family:'Inter',sans-serif;opacity:0.8;font-weight:600;letter-spacing:0.1em;">Settembre</span></div>
+          <div class="lc-body"><div class="lc-tag">Gastronomia</div><div class="lc-title">Sagra del Tonno Rosso</div><div class="lc-meta">📍 Porto di Marsala · Degustazioni gratuite · 3 giorni</div></div>
+        </div>
+        <div class="list-card" style="border:1px solid var(--border);border-radius:2px;padding:0.8rem;">
+          <div style="background:var(--notte);color:#fff;padding:0.8rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:60px;border-radius:2px;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;text-transform:uppercase;text-align:center;flex-shrink:0;">OTT<span style="font-size:0.58rem;font-family:'Inter',sans-serif;opacity:0.7;font-weight:600;letter-spacing:0.1em;">Ottobre</span></div>
+          <div class="lc-body"><div class="lc-tag">Vino</div><div class="lc-title">Inycon — Festival del Vino Marsala</div><div class="lc-meta">📍 Cantine aperte · 4 giorni di degustazioni · Masterclass</div></div>
+        </div>
+      </div>
+      <div style="text-align:center;padding:1.2rem 0 0.5rem;"><a href="mailto:marsalablog86@gmail.com" style="font-size:0.78rem;color:var(--blu);font-weight:600;">✉️ Segnala un evento: marsalablog86@gmail.com</a></div>
+    </div>
+  </div>
+</div>
+
+
+<div id="articleOverlay" style="display:none;position:fixed;inset:0;z-index:500;background:#fff;overflow-y:auto;">
   <div class="art-topbar">
-    <button class="art-back" onclick="closeArticle()">← Torna indietro</button>
+    <button class="art-back" onclick="document.getElementById('articleOverlay').style.display='none';document.body.style.overflow=''">← Torna indietro</button>
     <span class="art-topbar-logo">marsala<span>.blog</span></span>
   </div>
   <div id="articleContent"></div>
@@ -471,30 +574,38 @@ footer{background:var(--notte);color:rgba(255,255,255,0.5);padding:3rem 0 1.5rem
       <div><div class="footer-logo">marsala<span>.blog</span></div><div class="footer-tagline">La guida turistica più completa di Marsala. Ristoranti, cantine, spiagge, B&B e tutto quello che devi sapere.</div></div>
       <div><div class="footer-col-title">Scopri</div><div class="footer-links"><a href="#">Ristoranti</a><a href="#">Cantine e vino</a><a href="#">Spiagge</a><a href="#">B&B e Hotel</a><a href="#">Musei</a><a href="#">Isole Egadi</a></div></div>
       <div><div class="footer-col-title">Info utili</div><div class="footer-links"><a href="#">Come arrivare</a><a href="#">Trasporti locali</a><a href="#">Meteo</a><a href="#">Calendario eventi</a><a href="#">Mappa interattiva</a></div></div>
-      <div><div class="footer-col-title">Contatti</div><div class="footer-links"><a href="#">Segnala un posto</a><a href="#">Pubblicità</a><a href="#">Newsletter</a><a href="#">Privacy Policy</a></div></div>
+      <div><div class="footer-col-title">Contatti</div><div class="footer-links"><a href="#">Segnala un posto</a><a href="#">Pubblicità</a><a href="mailto:marsalablog86@gmail.com">Newsletter</a><a href="mailto:marsalablog86@gmail.com">✉️ marsalablog86@gmail.com</a><a href="#">Privacy Policy</a></div></div>
     </div>
     <div class="footer-bottom"><span>© 2026 marsala.blog — Porta del Mediterraneo · Marsala, Sicilia Occidentale</span><span>Made with ❤️ in Sicilia</span></div>
   </div>
 </footer>
 
 <script>
-const codiciMeteo = {0:'Soleggiato ☀️',1:'Quasi sereno 🌤',2:'Parzialmente nuvoloso ⛅',3:'Nuvoloso ☁️',45:'Nebbia 🌫',51:'Pioggerella 🌦',61:'Pioggia 🌧',80:'Rovesci 🌦',95:'Temporale ⛈'};
+const codiciMeteo={0:'Soleggiato ☀️',1:'Quasi sereno 🌤',2:'Parzialmente nuvoloso ⛅',3:'Nuvoloso ☁️',45:'Nebbia 🌫',51:'Pioggerella 🌦',61:'Pioggia 🌧',80:'Rovesci 🌦',95:'Temporale ⛈'};
 fetch('https://api.open-meteo.com/v1/forecast?latitude=37.7969&longitude=12.4352&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&wind_speed_unit=kmh&timezone=Europe/Rome')
-  .then(r=>r.json()).then(d=>{
-    const c=d.current;
-    const temp=Math.round(c.temperature_2m);
-    const desc=codiciMeteo[c.weather_code]||'–';
-    document.getElementById('meteoTop').textContent=desc.split(' ')[1]+' '+temp+'°C · Marsala, Sicilia';
-    document.getElementById('wwTemp').textContent=temp+'°';
-    document.getElementById('wwDesc').textContent=desc;
-    document.getElementById('wwHum').textContent=c.relative_humidity_2m+'%';
-    document.getElementById('wwWind').textContent=Math.round(c.wind_speed_10m)+' km/h';
-  }).catch(()=>{document.getElementById('meteoTop').textContent='☀️ Marsala, Sicilia';});
+.then(r=>r.json()).then(d=>{
+  const c=d.current;
+  const temp=Math.round(c.temperature_2m);
+  const desc=codiciMeteo[c.weather_code]||'–';
+  document.getElementById('meteoTop').textContent=desc.split(' ')[1]+' '+temp+'°C · Marsala, Sicilia';
+  document.getElementById('wwTemp').textContent=temp+'°';
+  document.getElementById('wwDesc').textContent=desc;
+  document.getElementById('wwHum').textContent=c.relative_humidity_2m+'%';
+  document.getElementById('wwWind').textContent=Math.round(c.wind_speed_10m)+' km/h';
+}).catch(()=>{document.getElementById('meteoTop').textContent='☀️ Marsala, Sicilia';});
+
 const oggi=new Date();
 document.getElementById('dataOggi').textContent=oggi.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).replace(/^\w/,c=>c.toUpperCase());
+
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});
+  a.addEventListener('click',e=>{
+    const href=a.getAttribute('href');
+    if(href==='#') return;
+    const t=document.querySelector(href);
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
 });
+
 const cats=document.querySelectorAll('.nav-cat');
 const mobLinks=document.querySelectorAll('.mobile-nav a');
 const secs=document.querySelectorAll('section[id]');
@@ -504,6 +615,91 @@ window.addEventListener('scroll',()=>{
   cats.forEach(c=>{c.classList.toggle('active',c.getAttribute('href')==='#'+cur);});
   mobLinks.forEach(c=>{c.classList.toggle('active',c.getAttribute('href')==='#'+cur);});
 });
+
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeModalOutside(e,id){
+  if(e.target===document.getElementById(id))closeModal(id);
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    ['notizieModal','bnbModal','eventiModal'].forEach(closeModal);
+    closeSearch();
+  }
+});
+
+const searchData=[
+  {cat:'Ristoranti',icon:'🦐',name:'Il Porto — Cucina di mare autentica',section:'ristoranti'},
+  {cat:'Ristoranti',icon:'🍕',name:'Trattoria da Nino — 50 anni di storia',section:'ristoranti'},
+  {cat:'Ristoranti',icon:'🦑',name:'Saline — Cucina del territorio',section:'ristoranti'},
+  {cat:'Dolci',icon:'🍰',name:'Pasticceria Grammatico — I cannoli più buoni',section:'ristoranti'},
+  {cat:'Gelateria',icon:'🍦',name:'Gelato Artigianale al Pistacchio',section:'ristoranti'},
+  {cat:'Street food',icon:'🥗',name:'Mercato del Pesce — Pane e panelle',section:'ristoranti'},
+  {cat:'Cantine',icon:'🏛',name:'Florio — dal 1833',section:'cantine'},
+  {cat:'Cantine',icon:'🍾',name:'Carlo Pellegrino — dal 1880',section:'cantine'},
+  {cat:'Cantine',icon:'🌿',name:'Donnafugata — vini biologici',section:'cantine'},
+  {cat:'Cantine',icon:'🍇',name:'Vitivinicola Lombardo',section:'cantine'},
+  {cat:'Spiagge',icon:'🏖',name:'Lido di Marsala',section:'spiagge'},
+  {cat:'Spiagge',icon:'🌊',name:'Punta Alga — Spiaggia nascosta',section:'spiagge'},
+  {cat:'B&B',icon:'🏰',name:'Palazzo del Carmine',section:'bnb-consigliati'},
+  {cat:'B&B',icon:'🌾',name:'Masseria Stagnone',section:'bnb-consigliati'},
+  {cat:'B&B',icon:'🌊',name:'Hotel Lido Azzurro',section:'bnb-consigliati'},
+  {cat:'B&B',icon:'🏡',name:'Casa Balio',section:'bnb-consigliati'},
+  {cat:'B&B',icon:'🌿',name:'Villa delle Saline',section:'bnb-consigliati'},
+  {cat:'Divertimento',icon:'🎵',name:'Cantina Sociale — Aperitivi al tramonto',section:'divertimento'},
+  {cat:'Divertimento',icon:'🌙',name:'Lido Sunset — Beach club',section:'divertimento'},
+  {cat:'Divertimento',icon:'🎭',name:'Teatro Impero — Spettacoli estivi',section:'divertimento'},
+  {cat:'Cultura',icon:'🏺',name:'Museo del Satiro Danzante',section:'cultura'},
+  {cat:'Cultura',icon:'⛵',name:'Nave Punica al Museo Baglio Anselmi',section:'cultura'},
+  {cat:'Cultura',icon:'⛩',name:'Mozia — Isola Fenicia',section:'cultura'},
+  {cat:'Cultura',icon:'⛪',name:'Duomo di San Tommaso',section:'cultura'},
+  {cat:'Egadi',icon:'🦋',name:'Favignana — La Farfalla',section:'egadi'},
+  {cat:'Egadi',icon:'🏛',name:'Levanzo — Grotta del Genovese',section:'egadi'},
+  {cat:'Egadi',icon:'🌿',name:'Marettimo — L\'isola più bella',section:'egadi'},
+  {cat:'Eventi',icon:'🎶',name:'Marsala Jazz Festival',section:'eventi'},
+  {cat:'Eventi',icon:'🎇',name:'Festa di San Giovanni Battista',section:'eventi'},
+  {cat:'Eventi',icon:'🍷',name:'Inycon — Festival del Vino Marsala',section:'eventi'},
+  {cat:'Notizie',icon:'🌊',name:'Stagione balneare 2026 aperta',section:'notizie'},
+  {cat:'Notizie',icon:'🏛',name:'Museo del Satiro: nuovi orari estivi',section:'notizie'},
+];
+
+function openSearch(){
+  document.getElementById('searchOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('searchInput').focus(),50);
+}
+function closeSearch(e){
+  if(e&&e.target!==document.getElementById('searchOverlay'))return;
+  document.getElementById('searchOverlay').classList.remove('open');
+  document.getElementById('searchInput').value='';
+  document.getElementById('searchResults').innerHTML='<div class="search-empty">Inizia a digitare per cercare…</div>';
+  document.body.style.overflow='';
+}
+function doSearch(q){
+  const res=document.getElementById('searchResults');
+  if(!q.trim()){res.innerHTML='<div class="search-empty">Inizia a digitare per cercare…</div>';return;}
+  const lower=q.toLowerCase();
+  const found=searchData.filter(d=>d.name.toLowerCase().includes(lower)||d.cat.toLowerCase().includes(lower));
+  if(!found.length){res.innerHTML='<div class="search-empty">Nessun risultato per "'+q+'"</div>';return;}
+  res.innerHTML=found.slice(0,10).map(d=>`<div class="search-result-item" onclick="goToSection('${d.section}','${d.cat}')"><div class="search-result-icon">${d.icon}</div><div class="search-result-info"><div class="search-result-cat">${d.cat}</div><div class="search-result-name">${d.name}</div></div></div>`).join('');
+}
+function goToSection(sec,cat){
+  document.getElementById('searchOverlay').classList.remove('open');
+  document.body.style.overflow='';
+  if(sec==='notizie'){openModal('notizieModal');return;}
+  if(sec==='bnb-consigliati'){openModal('bnbModal');return;}
+  if(sec==='eventi'){openModal('eventiModal');return;}
+  const t=document.getElementById(sec);
+  if(t){setTimeout(()=>{t.scrollIntoView({behavior:'smooth',block:'start'});},100);}
+}
+document.querySelector('.nav-search input').addEventListener('focus',openSearch);
+document.querySelector('.nav-search-btn').addEventListener('click',openSearch);
 </script>
 </body>
 </html>
